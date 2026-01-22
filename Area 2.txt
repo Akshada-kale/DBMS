@@ -1,0 +1,31 @@
+CREATE TABLE area (
+    radius NUMBER,
+    area NUMBER,
+    perimeter NUMBER
+);
+DECLARE
+    r1 NUMBER := 3;  -- starting radius (you can change this)
+    r2 NUMBER := 10; -- ending radius (you can change this)
+    r NUMBER;
+    pi CONSTANT NUMBER := 3.14159;
+BEGIN
+
+
+    FOR r IN r1..r2 LOOP
+        INSERT INTO area (radius, area, perimeter)
+        VALUES (
+            r,
+            pi * r * r,            -- area = πr²
+            2 * pi * r             -- perimeter = 2πr
+        );
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Values inserted successfully.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+/
+
+SELECT * FROM area;

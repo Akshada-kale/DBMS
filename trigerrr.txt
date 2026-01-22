@@ -1,0 +1,33 @@
+create table boook(bid number, author varchar(30), title varchar(30), Quantity number);
+create table library_aud(bid number, author varchar(30), title varchar(30), Quantity number, Action varchar(30));
+
+
+insert into boook values(1,'sakshi','wildlife',10);
+insert into boook values(2,'neha','domestic',5);
+insert into boook values(3,'atharva','reallife',2);
+select * from boook;
+
+create or replace trigger book_changee
+before update or delete on boook
+for each row 
+begin
+    if deleting then
+     insert into library_aud values(:old.bid,:old.author,:old.title,:old.Quantity,'DELETE');
+    else 
+      insert into library_aud values(:old.bid,:old.author,:old.title,:old.Quantity,'UPDATE');
+    end if;
+end;
+
+select * from boook;
+delete boook where bid = 2;
+update boook set Quantity = 10 where bid = 1;
+
+select * from library_aud;
+
+  
+
+
+
+
+
+

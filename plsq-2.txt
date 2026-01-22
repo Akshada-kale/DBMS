@@ -1,0 +1,56 @@
+-- Create Borrower table
+CREATE TABLE B(
+    Rollin INT, 
+    Name VARCHAR2(30), 
+    Date_of_issue DATE, 
+    name_of_book VARCHAR2(30), 
+    status VARCHAR2(30)
+);
+
+-- Create Fine table
+CREATE TABLE Fi(
+    Rollin INT, 
+    Date_of_return DATE, 
+    Amount INT
+);
+
+-- Insert sample data
+INSERT INTO B VALUES(1, 'sakshi', TO_DATE('27-06-2024','DD-MM-YYYY'), 'evs', 'issued');
+INSERT INTO B VALUES(2, 'neha', TO_DATE('10-05-2025','DD-MM-YYYY'), 'maths', 'issued');
+INSERT INTO B VALUES(3, 'diya', TO_DATE('20-04-2025', 'DD-MM-YYYY'), 'english', 'issued');
+
+COMMIT;
+
+-- PL/SQL block to calculate fine and update tables
+DECLARE
+   roll INT := 1; -- Enter roll number here (change as needed)
+   fine Fi.Amount%TYPE := 0;
+   d_of_issue DATE;
+   n_of_days INT;
+BEGIN
+   SELECT Date_of_issue INTO d_of_issue FROM B WHERE Rollin = roll;
+   
+   n_of_days := TRUNC(SYSDATE - d_of_issue);
+
+   IF n_of_days BETWEEN 10 AND 20 THEN
+      fine := n_of_days * 2;
+   ELSIF n_of_days > 20 THEN
+      fine := (20 * 2) + ((n_of_days - 20) * 5);
+   ELSE
+      fine := 0;
+   END IF;
+
+   INSERT INTO Fi (Rollin, Date_of_return, Amount) VALUES (roll, SYSDATE, fine);
+   
+   UPDATE B SET status = 'Returned' WHERE Rollin = roll;
+
+   COMMIT;
+
+   DBMS_OUTPUT.PUT_LINE('Fine calculated and updated successfully. Fine amount: ' || fine);
+EXCEPTION
+   WHEN NO_DATA_FOUND THEN
+      DBMS_OUTPUT.PUT_LINE('Roll number not found!');
+   WHEN OTHERS THEN
+      DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+/

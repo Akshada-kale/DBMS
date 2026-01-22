@@ -1,0 +1,66 @@
+-- Enable output
+SET SERVEROUTPUT ON;
+
+DECLARE
+    -- Declare variables
+    CURSOR emp_cursor IS
+        SELECT eid, ename, ehiredate
+        FROM employee2
+        WHERE EXTRACT(MONTH FROM ehiredate) = EXTRACT(MONTH FROM SYSDATE);
+
+    vid employee2.eid%TYPE;
+    vname employee2.ename%TYPE;
+    vhiredate employee2.ehiredate%TYPE;
+    vexp NUMBER;
+    vamount NUMBER;
+
+BEGIN
+    -- Create table if not exists (ignore error if already created)
+    BEGIN
+        EXECUTE IMMEDIATE 'CREATE TABLE employee2 (
+            eid INT,
+            ename VARCHAR(100),
+            ehiredate DATE,
+            eamount NUMBER
+        )';
+    EXCEPTION
+        WHEN OTHERS THEN
+            NULL; -- Table already exists
+    END;
+
+    -- Sample inserts (ignore duplicates)
+    BEGIN
+        INSERT INTO employee2 VALUES (1, 'Sakshi', TO_DATE('2020-05-15', 'YYYY-MM-DD'), NULL);
+        INSERT INTO employee2 VALUES (2, 'Neha', TO_DATE('2012-05-10', 'YYYY-MM-DD'), NULL);
+        INSERT INTO employee2 VALUES (3, 'Pratima', TO_DATE('2016-05-01', 'YYYY-MM-DD'), NULL);
+        INSERT INTO employee2 VALUES (4, 'Ritu', TO_DATE('2023-01-20', 'YYYY-MM-DD'), NULL);
+        INSERT INTO employee2 VALUES (5, 'Anuj', TO_DATE('2024-05-28', 'YYYY-MM-DD'), NULL);
+    EXCEPTION
+        WHEN DUP_VAL_ON_INDEX THEN
+            NULL;
+    END;
+
+    -- Cursor logic
+    OPEN emp_cursor;
+    LOOP
+        FETCH emp_cursor INTO vid, vname, vhiredate;
+        EXIT WHEN emp_cursor%NOTFOUND;
+
+        vexp := TRUNC(MONTHS_BETWEEN(SYSDATE, vhiredate) / 12);
+
+        IF vexp > 5 AND vexp < 10 THEN
+            vamount := 5000;
+        ELSIF vexp > 10 THEN
+            vamount := 10000;
+        ELSE
+            vamount := 2000;
+        END IF;
+
+        DBMS_OUTPUT.PUT_LINE('ID: ' || vid || ', Name: ' || vname ||
+                             ', Hire Date: ' || TO_CHAR(vhiredate, 'YYYY-MM-DD') ||
+                             ', Incentive: Rs. ' || vamount);
+    END LOOP;
+    CLOSE emp_cursor;
+END;
+/
+SELECT * FROM employee2;

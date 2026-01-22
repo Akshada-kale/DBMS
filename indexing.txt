@@ -1,0 +1,239 @@
+lib> show collections
+books
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681ce65d90c7132dfab71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681ce65d90c7132dfab71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681ce65d90c7132dfab71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681ce65d90c7132dfab7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681ce85590c7132dfab7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'very usefull'
+  }
+]
+lib> db.books.countDocuments({BY: "Ajay"})
+3
+lib> db.books.find({BY: "Ajay"}).sort({LIKES: 1}).limit(1)
+[
+  {
+    _id: ObjectId('681ce65d90c7132dfab71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  }
+]
+lib> db.books.find({BY: "Ajay"}).sort({LIKES: -1}).limit(1)
+[
+  {
+    _id: ObjectId('681ce65d90c7132dfab71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+lib> db.books.aggregate([
+... {$match: {BY: "Ajay"}},
+... {
+...   $group: {
+...    _id: null,
+... averageLikes: {$avg: "$LIKES"}
+... }
+... }
+... ])
+[ { _id: null, averageLikes: 65 } ]
+lib> db.books.find({BY: "Ajay"}).sort({_id : 1}).limit(1)
+[
+  {
+    _id: ObjectId('681ce65d90c7132dfab71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+lib> db.books.find({BY: "Ajay"}).sort({_id : -1}).limit(1)
+[
+  {
+    _id: ObjectId('681ce85590c7132dfab7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'very usefull'
+  }
+]
+lib> db.books.createIndex({BY: 1}}
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:28)
+
+> 1 | db.books.createIndex({BY: 1}}
+    |                             ^
+  2 |
+
+lib> db.books.createIndex({BY: 1})
+BY_1
+lib> db.books.find({BY: "Ajay").explain("execitionStats")
+Uncaught:
+SyntaxError: Unexpected token, expected "," (1:25)
+
+> 1 | db.books.find({BY: "Ajay").explain("execitionStats")
+    |                          ^
+  2 |
+
+lib> db.books.find({BY: "Ajay"}).explain("execitionStats")
+MongoServerError[BadValue]: Enumeration value 'execitionStats' for field 'explain.verbosity' is not a valid value.
+lib> db.books.find({BY: "Ajay"}).explain("executionStats")
+{
+  explainVersion: '1',
+  queryPlanner: {
+    namespace: 'lib.books',
+    parsedQuery: { BY: { '$eq': 'Ajay' } },
+    indexFilterSet: false,
+    queryHash: 'F10F77FA',
+    planCacheShapeHash: 'F10F77FA',
+    planCacheKey: 'E3276EA4',
+    optimizationTimeMillis: 2,
+    maxIndexedOrSolutionsReached: false,
+    maxIndexedAndSolutionsReached: false,
+    maxScansToExplodeReached: false,
+    prunedSimilarIndexes: false,
+    winningPlan: {
+      isCached: false,
+      stage: 'FETCH',
+      inputStage: {
+        stage: 'IXSCAN',
+        keyPattern: { BY: 1 },
+        indexName: 'BY_1',
+        isMultiKey: false,
+        multiKeyPaths: { BY: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { BY: [ '["Ajay", "Ajay"]' ] }
+      }
+    },
+    rejectedPlans: []
+  },
+  executionStats: {
+    executionSuccess: true,
+    nReturned: 3,
+    executionTimeMillis: 57,
+    totalKeysExamined: 3,
+    totalDocsExamined: 3,
+    executionStages: {
+      isCached: false,
+      stage: 'FETCH',
+      nReturned: 3,
+      executionTimeMillisEstimate: 56,
+      works: 4,
+      advanced: 3,
+      needTime: 0,
+      needYield: 0,
+      saveState: 1,
+      restoreState: 1,
+      isEOF: 1,
+      docsExamined: 3,
+      alreadyHasObj: 0,
+      inputStage: {
+        stage: 'IXSCAN',
+        nReturned: 3,
+        executionTimeMillisEstimate: 56,
+        works: 4,
+        advanced: 3,
+        needTime: 0,
+        needYield: 0,
+        saveState: 1,
+        restoreState: 1,
+        isEOF: 1,
+        keyPattern: { BY: 1 },
+        indexName: 'BY_1',
+        isMultiKey: false,
+        multiKeyPaths: { BY: [] },
+        isUnique: false,
+        isSparse: false,
+        isPartial: false,
+        indexVersion: 2,
+        direction: 'forward',
+        indexBounds: { BY: [ '["Ajay", "Ajay"]' ] },
+        keysExamined: 3,
+        seeks: 1,
+        dupsTested: 0,
+        dupsDropped: 0
+      }
+    }
+  },
+  queryShapeHash: 'F79374A64988F3FEB2A7C77BEFD746E15BF3EB033CB14D970FB43068E80A6191',
+  command: { find: 'books', filter: { BY: 'Ajay' }, '$db': 'lib' },
+  serverInfo: {
+    host: 'LAPTOP-TO8M3DJG',
+    port: 27017,
+    version: '8.0.6',
+    gitVersion: '80f21521ad4a3dfd5613f5d649d7058c6d46277f'
+  },
+  serverParameters: {
+    internalQueryFacetBufferSizeBytes: 104857600,
+    internalQueryFacetMaxOutputDocSizeBytes: 104857600,
+    internalLookupStageIntermediateDocumentMaxSizeBytes: 104857600,
+    internalDocumentSourceGroupMaxMemoryBytes: 104857600,
+    internalQueryMaxBlockingSortMemoryUsageBytes: 104857600,
+    internalQueryProhibitBlockingMergeOnMongoS: 0,
+    internalQueryMaxAddToSetBytes: 104857600,
+    internalDocumentSourceSetWindowFieldsMaxMemoryBytes: 104857600,
+    internalQueryFrameworkControl: 'trySbeRestricted',
+    internalQueryPlannerIgnoreIndexWithCollationForRegex: 1
+  },
+  ok: 1
+}
+lib>

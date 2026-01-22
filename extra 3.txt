@@ -1,0 +1,54 @@
+-- 1. Create employee table
+CREATE TABLE employee (
+    empid NUMBER,
+    name VARCHAR2(50),
+    basic_salary NUMBER,
+    type VARCHAR2(20)
+);
+
+-- 2. Create salary table
+CREATE TABLE salary (
+    empid NUMBER,
+    name VARCHAR2(50),
+    gross_salary NUMBER,
+    net_salary NUMBER
+);
+
+-- 3. Insert sample data
+INSERT INTO employee VALUES (1, 'Sakshi', 30000, 'Permanent');
+INSERT INTO employee VALUES (2, 'Neha', 18000, 'Temporary');
+INSERT INTO employee VALUES (3, 'Pranjal', 40000, 'Permanent');
+INSERT INTO employee VALUES (4, 'Pratima', 15000, 'Temporary');
+
+-- 4. PL/SQL Block to calculate salary
+BEGIN
+    FOR emp IN (SELECT * FROM employee) LOOP
+        DECLARE
+            da NUMBER := 0;
+            hra NUMBER := 0;
+            gross NUMBER := 0;
+            net NUMBER := 0;
+            deduction NUMBER := 2000;
+        BEGIN
+            IF LOWER(emp.type) = 'permanent' THEN
+                da := emp.basic_salary * 1.15;
+                hra := emp.basic_salary * 0.12;
+                IF hra > 20000 THEN
+                    hra := 20000;
+                END IF;
+                gross := emp.basic_salary + da + hra;
+            ELSE
+                gross := emp.basic_salary;
+            END IF;
+            
+            net := gross - deduction;
+
+            INSERT INTO salary VALUES (emp.empid, emp.name, gross, net);
+        END;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Salary calculated for all employees.');
+END;
+/
+
+-- 5. View the salary table
+SELECT * FROM salary;

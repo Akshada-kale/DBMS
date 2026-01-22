@@ -1,0 +1,21 @@
+-- 1. Create the table
+CREATE TABLE areas (
+    length NUMBER,
+    breadth NUMBER,
+    area NUMBER,
+    perimeter NUMBER
+);
+
+-- 2. PL/SQL block to calculate and insert values
+BEGIN
+    FOR len IN 10..20 LOOP
+        FOR br IN 5..10 LOOP
+            INSERT INTO areas (length, breadth, area, perimeter)
+            VALUES (len, br, len * br, 2 * (len + br));
+        END LOOP;
+    END LOOP;
+END;
+/
+
+-- 3. Display the stored values
+SELECT * FROM areas;

@@ -1,0 +1,851 @@
+Microsoft Windows [Version 10.0.22631.5335]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\NITRO>mysql -u root -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| data               |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakshi             |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+13 rows in set (0.01 sec)
+
+mysql> drop sakshi;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sakshi' at line 1
+mysql> drop table sakshi
+    -> ;
+ERROR 1046 (3D000): No database selected
+mysql> drop database sakshi
+    -> ;
+Query OK, 4 rows affected (0.09 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| data               |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+12 rows in set (0.00 sec)
+
+mysql> create database ASS1;
+ERROR 1007 (HY000): Can't create database 'ass1'; database exists
+mysql> create database A1;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| a1                 |
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| data               |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> create table Dept
+    -> (deptno varchar(30), name varchar(30), location varchar(30), managerempid varchar(30));
+ERROR 1046 (3D000): No database selected
+mysql> use a1;
+Database changed
+mysql> create table Dept
+    -> (deptno varchar(30), name varchar(30), location varchar(30), managerempid varchar(30));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table dept;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table dept
+    -> (deptno varchar(30), name varchar(30), location varchar(30), managerempid varchar(30), primary key(deptno));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc dept;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| deptno       | varchar(30) | NO   | PRI | NULL    |       |
+| name         | varchar(30) | YES  |     | NULL    |       |
+| location     | varchar(30) | YES  |     | NULL    |       |
+| managerempid | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table employess
+    -> (name varchar(30), empid varchar(30), address varchar(30), city varchar(30), dob date, date_of_joining date, gender varchar(30), salary int, deptno varchar(30), primary key(empid), foreign key(deptno) references dept(deptno), check(gender IN('M','F')));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc employess;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| name            | varchar(30) | YES  |     | NULL    |       |
+| empid           | varchar(30) | NO   | PRI | NULL    |       |
+| address         | varchar(30) | YES  |     | NULL    |       |
+| city            | varchar(30) | YES  |     | NULL    |       |
+| dob             | date        | YES  |     | NULL    |       |
+| date_of_joining | date        | YES  |     | NULL    |       |
+| gender          | varchar(30) | YES  |     | NULL    |       |
+| salary          | int         | YES  |     | NULL    |       |
+| deptno          | varchar(30) | YES  | MUL | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> create table project
+    -> (projectid varchar(30), title varchar(30), city varchar(30), primary key(projectid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| projectid | varchar(30) | NO   | PRI | NULL    |       |
+| title     | varchar(30) | YES  |     | NULL    |       |
+| city      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table works
+    -> (empid varchar(30), projectid varchar(30), total_hrs_worked varchar(30), foreign key(empid) references employess(empid), foreign key(projectid) refernces project(projectid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'refernces project(projectid))' at line 2
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> create table works
+    -> (empid varchar(30), projectid varchar(30), total_hrs_worked varchar(30), foreign key(empid) references employess(empid), foreign key(projectid) references project(projectid));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| projectid | varchar(30) | NO   | PRI | NULL    |       |
+| title     | varchar(30) | YES  |     | NULL    |       |
+| city      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc works;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| empid            | varchar(30) | YES  | MUL | NULL    |       |
+| projectid        | varchar(30) | YES  | MUL | NULL    |       |
+| total_hrs_worked | varchar(30) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table works;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table works
+    -> (empid varchar(30), projectid varchar(30), total_hrs_worked varchar(30), primary key(empid), primary key(projectid), foreign key(empid) references employess(empid), foreign key(projectid) references project(projectid));
+ERROR 1068 (42000): Multiple primary key defined
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> create table works
+    -> (empid varchar(30), projectid varchar(30), total_hrs_worked varchar(30), primary key(empid,projectid), foreign key(empid) references employess(empid), foreign key(projectid) references project(projectid));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql>
+mysql> desc works;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| empid            | varchar(30) | NO   | PRI | NULL    |       |
+| projectid        | varchar(30) | NO   | PRI | NULL    |       |
+| total_hrs_worked | varchar(30) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table dependent
+    -> (empid varchar(30), name_of_dependent varchar(30), age varchar(int), relation varchar(30), foreign key(empid) references employess(empid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int), relation varchar(30), foreign key(empid) references employess(empid))' at line 2
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> create table dependent
+    -> (empid varchar(30), name_of_dependent varchar(30), age varchar(30), relation varchar(30), foreign key(empid) references employess(empid));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> desc dependent
+    -> ;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| empid             | varchar(30) | YES  | MUL | NULL    |       |
+| name_of_dependent | varchar(30) | YES  |     | NULL    |       |
+| age               | varchar(30) | YES  |     | NULL    |       |
+| relation          | varchar(30) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc dept;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| deptno       | varchar(30) | NO   | PRI | NULL    |       |
+| name         | varchar(30) | YES  |     | NULL    |       |
+| location     | varchar(30) | YES  |     | NULL    |       |
+| managerempid | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc employess;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| name            | varchar(30) | YES  |     | NULL    |       |
+| empid           | varchar(30) | NO   | PRI | NULL    |       |
+| address         | varchar(30) | YES  |     | NULL    |       |
+| city            | varchar(30) | YES  |     | NULL    |       |
+| dob             | date        | YES  |     | NULL    |       |
+| date_of_joining | date        | YES  |     | NULL    |       |
+| gender          | varchar(30) | YES  |     | NULL    |       |
+| salary          | int         | YES  |     | NULL    |       |
+| deptno          | varchar(30) | YES  | MUL | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> desc project;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| projectid | varchar(30) | NO   | PRI | NULL    |       |
+| title     | varchar(30) | YES  |     | NULL    |       |
+| city      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc works;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| empid            | varchar(30) | NO   | PRI | NULL    |       |
+| projectid        | varchar(30) | NO   | PRI | NULL    |       |
+| total_hrs_worked | varchar(30) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc works;
++------------------+-------------+------+-----+---------+-------+
+| Field            | Type        | Null | Key | Default | Extra |
++------------------+-------------+------+-----+---------+-------+
+| empid            | varchar(30) | NO   | PRI | NULL    |       |
+| projectid        | varchar(30) | NO   | PRI | NULL    |       |
+| total_hrs_worked | varchar(30) | YES  |     | NULL    |       |
++------------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc dependent;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| empid             | varchar(30) | YES  | MUL | NULL    |       |
+| name_of_dependent | varchar(30) | YES  |     | NULL    |       |
+| age               | varchar(30) | YES  |     | NULL    |       |
+| relation          | varchar(30) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into dept
+    -> values
+    -> ('d1', 'sakshi', 'nashik', 'm1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept
+    -> values
+    -> ('d2', 'akshada', 'kalyan', 'm2'),
+    -> ('d3', 'sanket', 'thane', 'm3'),
+    -> ('d4', 'neha', 'pune', 'm4'),
+    -> ('d5', 'janvi','mumbai', 'm5');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept;
++--------+---------+----------+--------------+
+| deptno | name    | location | managerempid |
++--------+---------+----------+--------------+
+| d1     | sakshi  | nashik   | m1           |
+| d2     | akshada | kalyan   | m2           |
+| d3     | sanket  | thane    | m3           |
+| d4     | neha    | pune     | m4           |
+| d5     | janvi   | mumbai   | m5           |
++--------+---------+----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into dept
+    -> values
+    -> ('d6', 'atharva', 'building 1', 'm6');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from dept;
++--------+---------+------------+--------------+
+| deptno | name    | location   | managerempid |
++--------+---------+------------+--------------+
+| d1     | sakshi  | nashik     | m1           |
+| d2     | akshada | kalyan     | m2           |
+| d3     | sanket  | thane      | m3           |
+| d4     | neha    | pune       | m4           |
+| d5     | janvi   | mumbai     | m5           |
+| d6     | atharva | building 1 | m6           |
++--------+---------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into employess
+    -> values
+    -> ^C
+mysql>
+mysql>
+mysql> update dept
+    -> set name = 'IT'
+    -> where deptno = 'd2');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 3
+mysql>
+mysql>
+mysql> update dept
+    -> set name = 'IT'
+    -> where deptno = 'd2';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update dept
+    -> set name = 'comp'
+    -> where deptno = 'd1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update dept
+    -> set name = 'HR'
+    -> where deptno = 'd3';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update dept
+    -> set name = 'entc'
+    -> where deptno = 'd4';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update dept
+    -> set name = 'electrical'
+    -> where deptno = 'd5';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update dept
+    -> set name = 'mechanical'
+    -> where deptno = 'd6';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from dept;
++--------+------------+------------+--------------+
+| deptno | name       | location   | managerempid |
++--------+------------+------------+--------------+
+| d1     | comp       | nashik     | m1           |
+| d2     | IT         | kalyan     | m2           |
+| d3     | HR         | thane      | m3           |
+| d4     | entc       | pune       | m4           |
+| d5     | electrical | mumbai     | m5           |
+| d6     | mechanical | building 1 | m6           |
++--------+------------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into employess
+    -> valus
+    -> ^C
+mysql> insert into employess
+    -> values
+    -> ('sakshi', 'e1', 'nashik_road', 'nashik', 27-06-2005, 27-6-2023, 75000, 'd1');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql>
+mysql>
+mysql> ('sakshi', 'e1', 'nashik_road', 'nashik', 27-06-2005, 27-6-2023,F, 75000, 'd1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''sakshi', 'e1', 'nashik_road', 'nashik', 27-06-2005, 27-6-2023,F, 75000, 'd1')' at line 1
+mysql>
+mysql>
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('sakshi', 'e1', 'nashik_road', 'nashik', 27-06-2005, 27-6-2023,'F', 75000, 'd1');
+ERROR 1292 (22007): Incorrect date value: '-1984' for column 'dob' at row 1
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('sakshi', 'e1', 'nashik_road', 'nashik', '27-06-2005', '27-6-2023','F', 75000, 'd1');
+ERROR 1292 (22007): Incorrect date value: '27-06-2005' for column 'dob' at row 1
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('sakshi', 'e1', 'nashik_road', 'nashik', '2005-06-27', '2023-6-27','F', 75000, 'd1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> select * from employess
+    -> ;
++--------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| name   | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno |
++--------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| sakshi | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     |
++--------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into employess
+    -> values
+    -> ('sakshi', 'e1', 'nashik_road', 'nashik', '2005-06-27', '2023-6-27','T', 75000, 'd1');
+ERROR 3819 (HY000): Check constraint 'employess_chk_1' is violated.
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('akshada', 'e2', 'kalyan', '2004-07-28', '2022-07-28', 'F', 70000, 'd2');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql>
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('akshada', 'e2', 'kalyan_road', 'kalyan', '2004-07-28', '2022-07-28', 'F', 70000, 'd2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> insert into employess
+    -> values
+    -> ('atharva', 'e3', 'thane_road', 'thane', '2018-08-08', '2025-08-08', 'M', 50000, 'd3'),
+    -> ('aryan', 'e4', 'pune_road', 'pune', '2003-09-27
+    '> ', '2021-09-27','M',40000,'d4')
+    -> ;
+Query OK, 2 rows affected, 1 warning (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 1
+
+mysql>
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into employess
+    -> values
+    -> ('janvi', 'e5', 'mumbai_road', 'mumbai', '2001-01-26', '2018-01-26', 'F', 74000, 'd5');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into project
+    -> values
+    -> ('p1','green', 'nashik'),
+    -> ('p2', 'orange', 'kalyan'),
+    -> ('p3', 'blue', 'thane'),
+    -> ('p4', 'white', 'pune'),
+    -> ('p5', 'pink', 'mumbai');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from project;
++-----------+--------+--------+
+| projectid | title  | city   |
++-----------+--------+--------+
+| p1        | green  | nashik |
+| p2        | orange | kalyan |
+| p3        | blue   | thane  |
+| p4        | white  | pune   |
+| p5        | pink   | mumbai |
++-----------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into works
+    -> values
+    -> ('e1', 'p1', 12),
+    -> ('e2', 'p2', 15),
+    -> ('e3', 'p3', 13),
+    -> ('e4', 'p4', 14),
+    -> ('e5', 'p5', 15);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from works;
++-------+-----------+------------------+
+| empid | projectid | total_hrs_worked |
++-------+-----------+------------------+
+| e1    | p1        | 12               |
+| e2    | p2        | 15               |
+| e3    | p3        | 13               |
+| e4    | p4        | 14               |
+| e5    | p5        | 15               |
++-------+-----------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc dependent;
++-------------------+-------------+------+-----+---------+-------+
+| Field             | Type        | Null | Key | Default | Extra |
++-------------------+-------------+------+-----+---------+-------+
+| empid             | varchar(30) | YES  | MUL | NULL    |       |
+| name_of_dependent | varchar(30) | YES  |     | NULL    |       |
+| age               | varchar(30) | YES  |     | NULL    |       |
+| relation          | varchar(30) | YES  |     | NULL    |       |
++-------------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into dependent
+    -> values
+    -> ('e1', 'malhari', '44','father'),
+    -> ('e2', 'laxmi', '48', 'mother'),
+    -> ('e3', 'dilip', '35', 'father),
+    '> (e4, 'lata', '50', 'mother'),
+    '> ^C
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> insert into dependent
+    -> values
+    -> ('e1', 'malhari', '44','father'),
+    -> ('e2', 'laxmi', '48', 'mother'),
+    -> ('e3', 'dilip', '35', 'father'),
+    -> ('e4', 'lata', '45', 'mother'),
+    -> ('e5', 'rajshree', '42', 'mother');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from dependent;
++-------+-------------------+------+----------+
+| empid | name_of_dependent | age  | relation |
++-------+-------------------+------+----------+
+| e1    | malhari           | 44   | father   |
+| e2    | laxmi             | 48   | mother   |
+| e3    | dilip             | 35   | father   |
+| e4    | lata              | 45   | mother   |
+| e5    | rajshree          | 42   | mother   |
++-------+-------------------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> create table employe
+    -> (name varchar(30), empid varchar(30), address varchar(30), city varchar(30), dob date , date_of_joining date, gender varchar(30), salary int, deptno varchar(30), primary key(empid), foreign key(deptno) references dept(deptno), check(gender IN('M','F')));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc employee;
+ERROR 1146 (42S02): Table 'a1.employee' doesn't exist
+mysql> desc employe;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| name            | varchar(30) | YES  |     | NULL    |       |
+| empid           | varchar(30) | NO   | PRI | NULL    |       |
+| address         | varchar(30) | YES  |     | NULL    |       |
+| city            | varchar(30) | YES  |     | NULL    |       |
+| dob             | date        | YES  |     | NULL    |       |
+| date_of_joining | date        | YES  |     | NULL    |       |
+| gender          | varchar(30) | YES  |     | NULL    |       |
+| salary          | int         | YES  |     | NULL    |       |
+| deptno          | varchar(30) | YES  | MUL | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> drop employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> drop table employee;
+ERROR 1051 (42S02): Unknown table 'a1.employee'
+mysql> drop table employe;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employess
+    -> add column mobile_no ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql>
+mysql>
+mysql> alter table employess
+    -> add column mobile_no varchar(30);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno | mobile_no |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     | NULL      |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     | NULL      |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     | NULL      |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     | NULL      |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     | NULL      |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into employess
+    -> values
+    -> ^C
+mysql> update employess
+    -> set mobile_no = '932607655'
+    -> where empid = 'e1';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno | mobile_no |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     | 932607655 |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     | NULL      |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     | NULL      |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     | NULL      |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     | NULL      |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update employess
+    -> set mobile_no = '932607654'
+    -> where empid = 'e2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employess
+    -> set mobile_no = '932607653'
+    -> where empid = 'e3';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employess
+    -> set mobile_no = '932607652'
+    -> where empid = 'e4';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employess
+    -> set mobile_no = '932607651'
+    -> where empid = 'e5';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno | mobile_no |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     | 932607655 |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     | 932607654 |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     | 932607653 |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     | 932607652 |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     | 932607651 |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> update employess
+    -> set mobile_no = '7972511866'
+    -> where empid = 'e1';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno | mobile_no  |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     | 7972511866 |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     | 932607654  |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     | 932607653  |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     | 932607652  |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     | 932607651  |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name
+    -> from employess
+    -> where name like '%s';
+Empty set (0.00 sec)
+
+mysql> where name like 's%';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where name like 's%'' at line 1
+mysql>
+mysql>
+mysql> select name
+    -> from employess
+    -> where name like 's%';
++--------+
+| name   |
++--------+
+| sakshi |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select name
+    -> from employess
+    -> where name like '%i';
++--------+
+| name   |
++--------+
+| sakshi |
+| janvi  |
++--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+------------+------------+--------------+
+| deptno | name       | location   | managerempid |
++--------+------------+------------+--------------+
+| d1     | comp       | nashik     | m1           |
+| d2     | IT         | kalyan     | m2           |
+| d3     | HR         | thane      | m3           |
+| d4     | entc       | pune       | m4           |
+| d5     | electrical | mumbai     | m5           |
+| d6     | mechanical | building 1 | m6           |
++--------+------------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select name
+    -> from dept
+    -> where location = 'building 1';
++------------+
+| name       |
++------------+
+| mechanical |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * name
+    -> from em^C
+mysql> select * from employess;
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+| name    | empid | address     | city   | dob        | date_of_joining | gender | salary | deptno | mobile_no  |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+| sakshi  | e1    | nashik_road | nashik | 2005-06-27 | 2023-06-27      | F      |  75000 | d1     | 7972511866 |
+| akshada | e2    | kalyan_road | kalyan | 2004-07-28 | 2022-07-28      | F      |  70000 | d2     | 932607654  |
+| atharva | e3    | thane_road  | thane  | 2018-08-08 | 2025-08-08      | M      |  50000 | d3     | 932607653  |
+| aryan   | e4    | pune_road   | pune   | 2003-09-27 | 2021-09-27      | M      |  40000 | d4     | 932607652  |
+| janvi   | e5    | mumbai_road | mumbai | 2001-01-26 | 2018-01-26      | F      |  74000 | d5     | 932607651  |
++---------+-------+-------------+--------+------------+-----------------+--------+--------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name
+    -> from employee
+    -> ^C
+mysql>
+mysql> select name
+    -> from employess
+    -> where date_of_joining>='2019-01-01'
+    -> and date_of_joinging<='2020-12-31';
+ERROR 1054 (42S22): Unknown column 'date_of_joinging' in 'where clause'
+mysql> select name
+    -> from employess
+    -> where date_of_joining>='2019-01-01'
+    -> and date_of_joining<='2020-12-31';
+Empty set (0.00 sec)
+
+mysql>
+mysql>
+mysql>
+mysql> select name
+    -> from employess
+    -> where date_of_joining>='2018-01-01'
+    -> and date_of_joining<='2025-12-31';
++---------+
+| name    |
++---------+
+| sakshi  |
+| akshada |
+| atharva |
+| aryan   |
+| janvi   |
++---------+
+5 rows in set (0.00 sec)
+
+mysql>
+
+

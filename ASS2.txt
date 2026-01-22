@@ -1,0 +1,451 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> create database data
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use data
+Database changed
+
+mysql> create table employee
+    -> (empno int AUTO_INCREMENT Primary key, empname varchar(30), designation varchar(30), City varchar(30), Salary int, Zipcode varchar(30), Country varchar(30));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc employee;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| empno       | int         | NO   | PRI | NULL    | auto_increment |
+| empname     | varchar(30) | YES  |     | NULL    |                |
+| designation | varchar(30) | YES  |     | NULL    |                |
+| City        | varchar(30) | YES  |     | NULL    |                |
+| Salary      | int         | YES  |     | NULL    |                |
+| Zipcode     | varchar(30) | YES  |     | NULL    |                |
+| Country     | varchar(30) | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+7 rows in set (0.00 sec)
+
+
+mysql> insert into employee
+    -> values
+    -> (NULL,'Sakshi', 'Engineer', 'Kalyan', 75000, 421103, 'India'),
+    -> (NULL,'Malhari','Developer','Thane', 100000, 422003, 'India'),
+    -> (NULL,'Rajshree', 'Manager', 'Nashik', 50000, 411123,'India');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------+----------+-------------+--------+--------+---------+---------+
+| empno | empname  | designation | City   | Salary | Zipcode | Country |
++-------+----------+-------------+--------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane  | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik |  50000 | 411123  | India   |
++-------+----------+-------------+--------+--------+---------+---------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE INDEX countryy ON employee(Country);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into employee
+    -> values
+    -> (NULL,'Atharva','Tester','Igatpuri',45000, 455265, 'USA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
++-------+----------+-------------+----------+--------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select Country
+    -> from employee
+    -> where Country = 'India';
++---------+
+| Country |
++---------+
+| India   |
+| India   |
+| India   |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> select empname
+    -> from employee
+    -> where Country = 'India';
++----------+
+| empname  |
++----------+
+| Sakshi   |
+| Malhari  |
+| Rajshree |
++----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno, empname
+    -> from employee
+    -> where country = 'USA';
++-------+---------+
+| empno | empname |
++-------+---------+
+|     4 | Atharva |
++-------+---------+
+1 row in set (0.00 sec)
+
+
+mysql> insert into employee
+    -> values
+    -> (NULL,'Mauli','Doctor','Mumbai',25000, 071, 'Dubai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
+|     5 | Mauli    | Doctor      | Mumbai   |  25000 | 71      | Dubai   |
++-------+----------+-------------+----------+--------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update employee
+    -> set zipcode = '071'
+    -> where empno = 5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
+|     5 | Mauli    | Doctor      | Mumbai   |  25000 | 071     | Dubai   |
++-------+----------+-------------+----------+--------+---------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select country
+    -> from employee
+    -> where zipcode = '071';
++---------+
+| country |
++---------+
+| Dubai   |
++---------+
+1 row in set (0.00 sec)
+
+mysql> EXPLAIN select country from employee where zipcode='071';
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | employee | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    5 |    20.00 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select country
+    -> from employee
+    -> where country = 'usa';
++---------+
+| country |
++---------+
+| USA     |
++---------+
+1 row in set (0.00 sec)
+
+mysql> EXPLAIN select country from employee where country = 'usa;
+    '> ^C
+mysql> EXPLAIN select country from employee where country = 'usa';
++----+-------------+----------+------------+------+---------------+----------+---------+-------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key      | key_len | ref   | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+----------+---------+-------+------+----------+-------------+
+|  1 | SIMPLE      | employee | NULL       | ref  | countryy      | countryy | 123     | const |    1 |   100.00 | Using index |
++----+-------------+----------+------------+------+---------------+----------+---------+-------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+
+
+
+
+mysql> insert into employee
+    -> values
+    -> (NULL,'Swati','Biotech','Mumbai', 75000, 456, 'India');
+Query OK, 1 row affected (0.01 sec)
+
+
+
+mysql> insert into employee
+    -> values
+    -> (NULL, 'Venu', 'Accountant' , 'Mumbai',80000,666, 'India');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
+|     5 | Mauli    | Doctor      | Mumbai   |  25000 | 071     | Dubai   |
+|     6 | Swati    | Biotech     | Mumbai   |  75000 | 456     | India   |
+|     7 | Venu     | Accountant  | Mumbai   |  80000 | 666     | India   |
++-------+----------+-------------+----------+--------+---------+---------+
+7 rows in set (0.00 sec)
+
+
+
+mysql> CREATE VIEW emp_mum AS
+    -> select empname
+    -> from employee
+    -> where city = 'Mumbai';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp_num;
+ERROR 1146 (42S02): Table 'data.emp_num' doesn't exist
+mysql> select * from emp_mum;
++---------+
+| empname |
++---------+
+| Mauli   |
+| Swati   |
+| Venu    |
++---------+
+3 rows in set (0.00 sec)
+
+
+mysql> drop view emp_mum;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE VIEW emp_mum AS
+    -> select empname
+    -> from employee
+    -> where salary>50000
+    -> and city = 'Mumbai';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp_mum;
++---------+
+| empname |
++---------+
+| Swati   |
+| Venu    |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(*) from employee;
++----------+
+| COUNT(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(city)
+    -> from employee
+    -> where city = 'Mumbai';
++-------------+
+| COUNT(city) |
++-------------+
+|           3 |
++-------------+
+1 row in set (0.00 sec)
+
+
+mysql> CREATE or REPLACE view emp_mum as
+    -> select empname, salary
+    -> from employee
+    -> where city = 'Mumbai';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from emp_mum;
++---------+--------+
+| empname | salary |
++---------+--------+
+| Mauli   |  25000 |
+| Swati   |  75000 |
+| Venu    |  80000 |
++---------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(salary)
+    -> from emp_mum
+    -> ;
++-------------+
+| avg(salary) |
++-------------+
+|  60000.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select min(salary)
+    -> from emp_mum;
++-------------+
+| min(salary) |
++-------------+
+|       25000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select max(salary)
+    -> from emp_mum;
++-------------+
+| max(salary) |
++-------------+
+|       80000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary)
+    -> from emp_mum;
++-------------+
+| avg(salary) |
++-------------+
+|  60000.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(salary)
+    -> from emp_mum;
++-------------+
+| sum(salary) |
++-------------+
+|      180000 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+
+
+mysql> select e1.empname
+    -> from employee e1
+    -> where exists(
+    -> select 1
+    -> from employee e2
+    -> where e1.zipcode = e2.zipcode AND e1.empno!= e2.empno);
+Empty set (0.00 sec)
+
+mysql> insert into employee
+    -> values
+    -> (NULL, 'Shweta', 'Clerk','Mumbai', 55000, '071','India');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select e1.empname
+    -> from employee e1
+    -> where exists(
+    -> select 1
+    -> from employee e2
+    -> where e1.zipcode = e2.zipcode AND e1.empno!= e2.empno);
++---------+
+| empname |
++---------+
+| Mauli   |
+| Shweta  |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
+|     5 | Mauli    | Doctor      | Mumbai   |  25000 | 071     | Dubai   |
+|     6 | Swati    | Biotech     | Mumbai   |  75000 | 456     | India   |
+|     7 | Venu     | Accountant  | Mumbai   |  80000 | 666     | India   |
+|     8 | Shweta   | Clerk       | Mumbai   |  55000 | 071     | India   |
++-------+----------+-------------+----------+--------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> insert into employee
+    -> values
+    -> (NULL,'Sumeet','IPS','Pune',150000,666, 'India');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employee;
++-------+----------+-------------+----------+--------+---------+---------+
+| empno | empname  | designation | City     | Salary | Zipcode | Country |
++-------+----------+-------------+----------+--------+---------+---------+
+|     1 | Sakshi   | Engineer    | Kalyan   |  75000 | 421103  | India   |
+|     2 | Malhari  | Developer   | Thane    | 100000 | 422003  | India   |
+|     3 | Rajshree | Manager     | Nashik   |  50000 | 411123  | India   |
+|     4 | Atharva  | Tester      | Igatpuri |  45000 | 455265  | USA     |
+|     5 | Mauli    | Doctor      | Mumbai   |  25000 | 071     | Dubai   |
+|     6 | Swati    | Biotech     | Mumbai   |  75000 | 456     | India   |
+|     7 | Venu     | Accountant  | Mumbai   |  80000 | 666     | India   |
+|     8 | Shweta   | Clerk       | Mumbai   |  55000 | 071     | India   |
+|     9 | Sumeet   | IPS         | Pune     | 150000 | 666     | India   |
++-------+----------+-------------+----------+--------+---------+---------+
+9 rows in set (0.00 sec)
+
+
+mysql> select e1.empname
+    -> from employee e1
+    -> where exists(
+    -> select 1
+    -> from employee e2
+    -> where e1.zipcode = e2.zipcode AND e1.empno!= e2.empno);
++---------+
+| empname |
++---------+
+| Mauli   |
+| Venu    |
+| Shweta  |
+| Sumeet  |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select e1.empname AS employee1, e2.empname AS employee2, e1.zipcode
+    -> FROM employee e1
+    -> JOIN employee e2
+    -> ON e1.zipcode = e2.zipcode
+    -> AND e1.empno < e2.empno;
++-----------+-----------+---------+
+| employee1 | employee2 | zipcode |
++-----------+-----------+---------+
+| Mauli     | Shweta    | 071     |
+| Venu      | Sumeet    | 666     |
++-----------+-----------+---------+
+2 rows in set (0.00 sec)
+
+
+mysql> select e1.empname, e2.empname, e1.zipcode
+    -> FROM employee e1
+    -> JOIN employee e2
+    -> ON e1.zipcode = e2.zipcode
+    -> AND e1.empno < e2.empno;
++---------+---------+---------+
+| empname | empname | zipcode |
++---------+---------+---------+
+| Mauli   | Shweta  | 071     |
+| Venu    | Sumeet  | 666     |
++---------+---------+---------+
+2 rows in set (0.00 sec)
+

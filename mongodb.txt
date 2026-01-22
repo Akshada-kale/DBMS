@@ -1,0 +1,287 @@
+C:\Users\NITRO>mongosh
+Current Mongosh Log ID: 681ca51365e520d499b71235
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.4.2
+Using MongoDB:          8.0.6
+Using Mongosh:          2.4.2
+mongosh 2.5.1 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-04-11T12:55:04.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show databases;
+admin     40.00 KiB
+college   48.00 KiB
+config   108.00 KiB
+local     72.00 KiB
+test> use crud
+switched to db crud
+crud> db.createCollection("Student")
+{ ok: 1 }
+
+crud> show collections;
+Student
+crud> db.Student.insertOne({
+... name : "Sakshi",
+... rollno : "30",
+... department : "AIDS",
+... Address : "Kalyan"
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId('681ca63765e520d499b71236')
+}
+
+
+crud> db.Student.insertMany([ { name : "rajshree",rollno :"15", department : "AIDS", Address : "Nashik"}, { name : "Malhari",rollno : "35", department : "Computer", Address : "Pune"}])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('681ca71265e520d499b71237'),
+    '1': ObjectId('681ca71265e520d499b71238')
+  }
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Kalyan'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'Computer',
+    Address: 'Pune'
+  }
+]
+
+
+crud> db.Student.findOne({rollno:30}) ;
+null
+crud> db.Student.findOne({rollno: "30" }) ;
+{
+  _id: ObjectId('681ca63765e520d499b71236'),
+  name: 'Sakshi',
+  rollno: '30',
+  department: 'AIDS',
+  Address: 'Kalyan'
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Kalyan'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'Computer',
+    Address: 'Pune'
+  }
+]
+
+
+
+
+crud> db.Student.updateOne(
+... {rollno:"30"},
+... {$set: {address : "Nashik"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Kalyan',
+    address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'Computer',
+    Address: 'Pune'
+  }
+]
+crud> db.Student.updateOne( { rollno: "30" }, { $set: { Address: "Nashik" } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Nashik',
+    address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'Computer',
+    Address: 'Pune'
+  }
+]
+crud> db.Student.updateMany(
+... { Address: "Nashik"},
+... { $set: {department:"AIDS"}}
+... )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Nashik',
+    address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'Computer',
+    Address: 'Pune'
+  }
+]
+
+
+crud> db.Student.updateMany( { Address: "Pune" }, { $set: { department: "AIDS" } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+crud> db.Student.find()
+[
+  {
+    _id: ObjectId('681ca63765e520d499b71236'),
+    name: 'Sakshi',
+    rollno: '30',
+    department: 'AIDS',
+    Address: 'Nashik',
+    address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71237'),
+    name: 'rajshree',
+    rollno: '15',
+    department: 'AIDS',
+    Address: 'Nashik'
+  },
+  {
+    _id: ObjectId('681ca71265e520d499b71238'),
+    name: 'Malhari',
+    rollno: '35',
+    department: 'AIDS',
+    Address: 'Pune'
+  }
+]
+crud> db.Student.deleteOne({rollno:"30"})
+{ acknowledged: true, deletedCount: 1 }
+crud> db.Student.deleteMany({department : "AIDS"})
+{ acknowledged: true, deletedCount: 2 }
+crud> db.Student.find()
+
+
+
+
+crud> show collections
+Student
+crud> db.Student.drop()
+true
+crud> show collections
+
+crud> db.crud.drop()
+
+
+crud> db.student.find({
+...   rollno: { $in: ["30", "35"] }
+... })
+...
+[
+  {
+    _id: ObjectId('681cac81c97ae2b959b71236'),
+    name: 'sakshi',
+    rollno: '30',
+    dept: 'AIDS'
+  },
+  {
+    _id: ObjectId('681cad0bc97ae2b959b71237'),
+    name: 'Neha',
+    rollno: '35',
+    dept: 'AIDS'
+  }
+]
+crud>

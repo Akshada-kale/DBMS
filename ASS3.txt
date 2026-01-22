@@ -1,0 +1,251 @@
+
+C:\Users\NITRO>mysql -u root -p
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 212
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| b30                |
+| crudd              |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> create database ASS3
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> use ass3;
+Database changed
+mysql> create table Instructor
+    -> (instructorid int, instructorname varchar(30), instructorcity varchar(30), specialization varchar(30), primary key(instructorid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc instructor
+    -> ;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| instructorid   | int         | NO   | PRI | NULL    |       |
+| instructorname | varchar(30) | YES  |     | NULL    |       |
+| instructorcity | varchar(30) | YES  |     | NULL    |       |
+| specialization | varchar(30) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+mysql> create table student(studentid int, studentname varchar(30), instructorid int, studentcity varchar(30), primary key(studentid), foreign key(instructorid) references instructor(instructorid));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc student;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| studentid    | int         | NO   | PRI | NULL    |       |
+| studentname  | varchar(30) | YES  |     | NULL    |       |
+| instructorid | int         | YES  | MUL | NULL    |       |
+| studentcity  | varchar(30) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc instructor
+    -> ;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| instructorid   | int         | NO   | PRI | NULL    |       |
+| instructorname | varchar(30) | YES  |     | NULL    |       |
+| instructorcity | varchar(30) | YES  |     | NULL    |       |
+| specialization | varchar(30) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+
+
+mysql> insert into instructor
+    -> values
+    -> (1,'Malhari','Nashik','Computer'),
+    -> (2,'Rajshree','Igatpuri','Maths'),
+    -> (3,'Sumeet','Pune','English'),
+    -> (4,'Advait','Pimpri','History'),
+    -> (5,'Vijaya','Thane','geography');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from instructor;
++--------------+----------------+----------------+----------------+
+| instructorid | instructorname | instructorcity | specialization |
++--------------+----------------+----------------+----------------+
+|            1 | Malhari        | Nashik         | Computer       |
+|            2 | Rajshree       | Igatpuri       | Maths          |
+|            3 | Sumeet         | Pune           | English        |
+|            4 | Advait         | Pimpri         | History        |
+|            5 | Vijaya         | Thane          | geography      |
++--------------+----------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student
+    -> values
+    -> (1001, 'sakshi', 1, 'kalyan'),
+    -> (1002, 'Atharva', 2, 'Thane'),
+    -> (1003,'Mauli',3,'Nashik'),
+    -> (1004,'Harshada',4,'Mumbai'),
+    -> (1005,'Monu',5,'Igatpuri');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++-----------+-------------+--------------+-------------+
+| studentid | studentname | instructorid | studentcity |
++-----------+-------------+--------------+-------------+
+|      1001 | sakshi      |            1 | kalyan      |
+|      1002 | Atharva     |            2 | Thane       |
+|      1003 | Mauli       |            3 | Nashik      |
+|      1004 | Harshada    |            4 | Mumbai      |
+|      1005 | Monu        |            5 | Igatpuri    |
++-----------+-------------+--------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from instructor;
++--------------+----------------+----------------+----------------+
+| instructorid | instructorname | instructorcity | specialization |
++--------------+----------------+----------------+----------------+
+|            1 | Malhari        | Nashik         | Computer       |
+|            2 | Rajshree       | Igatpuri       | Maths          |
+|            3 | Sumeet         | Pune           | English        |
+|            4 | Advait         | Pimpri         | History        |
+|            5 | Vijaya         | Thane          | geography      |
++--------------+----------------+----------------+----------------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> insert into student
+    -> values
+    -> (1006,'Venu',null,'Dombivali');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++-----------+-------------+--------------+-------------+
+| studentid | studentname | instructorid | studentcity |
++-----------+-------------+--------------+-------------+
+|      1001 | sakshi      |            1 | kalyan      |
+|      1002 | Atharva     |            2 | Thane       |
+|      1003 | Mauli       |            3 | Nashik      |
+|      1004 | Harshada    |            4 | Mumbai      |
+|      1005 | Monu        |            5 | Igatpuri    |
+|      1006 | Venu        |         NULL | Dombivali   |
++-----------+-------------+--------------+-------------+
+6 rows in set (0.00 sec)
+
+
+
+
+
+mysql> select studentname
+    -> from student, instructor
+    -> where student.instructorid = instructor.instructorid;
++-------------+
+| studentname |
++-------------+
+| sakshi      |
+| Atharva     |
+| Mauli       |
+| Harshada    |
+| Monu        |
++-------------+
+5 rows in set (0.00 sec)
+
+mysql> select studentname, instructorname
+    -> from student, instructor
+    -> where student.instructorid = instructor.instructorid;
++-------------+----------------+
+| studentname | instructorname |
++-------------+----------------+
+| sakshi      | Malhari        |
+| Atharva     | Rajshree       |
+| Mauli       | Sumeet         |
+| Harshada    | Advait         |
+| Monu        | Vijaya         |
++-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select studentname
+    -> from student, instructor
+    -> where studentid is null;
+Empty set (0.00 sec)
+
+mysql> select studentname
+    -> from student
+    -> where instructorid is null;
++-------------+
+| studentname |
++-------------+
+| Venu        |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select studentname,instructorname,specialization
+    -> from student,instructor
+    -> where specialization = "computer"
+    -> and student.instructorid = instructor.instructorid;
++-------------+----------------+----------------+
+| studentname | instructorname | specialization |
++-------------+----------------+----------------+
+| sakshi      | Malhari        | Computer       |
++-------------+----------------+----------------+
+1 row in set (0.00 sec)
+
+mysql> create view mumbai_student AS
+    -> select studentid, studentname
+    -> from student,instructor
+    -> where instructorcity = "pune"
+    -> and student.instructorid =  instructor.instructorid;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from mumbai_student;
++-----------+-------------+
+| studentid | studentname |
++-----------+-------------+
+|      1003 | Mauli       |
++-----------+-------------+
+1 row in set (0.00 sec)
+
+mysql>

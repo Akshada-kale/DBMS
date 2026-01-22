@@ -1,0 +1,707 @@
+
+C:\Users\NITRO>mongosh
+Current Mongosh Log ID: 681cbc28d4a7529147b71235
+Connecting to:          mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.4.2
+Using MongoDB:          8.0.6
+Using Mongosh:          2.4.2
+mongosh 2.5.1 is available for download: https://www.mongodb.com/try/download/shell
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2025-04-11T12:55:04.478+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> show databases;
+admin     40.00 KiB
+college   48.00 KiB
+config   108.00 KiB
+local     72.00 KiB
+test> use lib
+switched to db lib
+lib> db.createCollection("books")
+{ ok: 1 }
+lib> show collections
+books
+
+lib> db.books.insertMany([
+...   {
+...     TITLE: "mongodb",
+...     DESCRIPTION: "MongoDB basics",
+...     BY: "Ajay",
+...     URL: "http://example.com/mongodb",
+...     TAGS: ["database", "NoSQL"],
+...     LIKES: 120
+...   },
+...   {
+...     TITLE: "NoSQL overview",
+...     DESCRIPTION: "Intro to NoSQL",
+...     BY: "Rahul",
+...     URL: "http://example.com/nosql",
+...     TAGS: ["database"],
+...     LIKES: 50
+...   },
+...   {
+...     TITLE: "JavaScript Guide",
+...     DESCRIPTION: "JS concepts",
+...     BY: "Ajay",
+...     URL: "http://example.com/js",
+...     TAGS: ["programming", "javascript"],
+...     LIKES: 30
+...   },
+...   {
+...     TITLE: "Python Crash Course",
+...     DESCRIPTION: "Learn Python quickly",
+...     BY: "Neha",
+...     URL: "http://example.com/python",
+...     TAGS: ["python", "programming"],
+...     LIKES: 5
+...   },
+...   {
+...     TITLE: "Data Science",
+...     DESCRIPTION: "Data analysis with Python",
+...     BY: "Sakshi",
+...     URL: "http://example.com/ds",
+...     TAGS: ["data", "python"],
+...     LIKES: 70
+...   }
+... ])
+...
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('681cbd96d4a7529147b71236'),
+    '1': ObjectId('681cbd96d4a7529147b71237'),
+    '2': ObjectId('681cbd96d4a7529147b71238'),
+    '3': ObjectId('681cbd96d4a7529147b71239'),
+    '4': ObjectId('681cbd96d4a7529147b7123a')
+  }
+}
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  }
+]
+lib> db.books.insertOne({
+...   TITLE: "Node.js Basics",
+...   DESCRIPTION: "Intro to Node.js",
+...   BY: "Ajay",
+...   URL: "http://example.com/node",
+...   TAGS: ["javascript", "backend"],
+...   LIKES: 45,
+...   username: "sakuu",
+...   comments: "Very helpful!"
+... })
+...
+{
+  acknowledged: true,
+  insertedId: ObjectId('681cbdc9d4a7529147b7123b')
+}
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+
+lib> db.books.find({TITLE : "mongodb"})
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+lib> db.books.find({
+... $or: [{ BY : "Ajay", TITLE : "mongodb"}] })
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+
+
+lib> db.books.find({ $or: [{ BY: "Ajay"}, {TITLE: "NoSQL overview" }] })
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+
+
+lib> db.books.find({ $or: [{ BY: "Ajay",TITLE: "mongodb" }] })
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+
+
+
+lib> db.books.find({ LIKES:{$gt : 10} })
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+
+
+
+
+
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+lib> db.books.find({
+... LIKES: { $gt : 100 },
+... $or: [{ TITLE: "mongodb"},{ BY: "Ajay"}]
+... })
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+
+lib> db.book.updateOne(
+... {TITLE: "mongodb"},
+... {$set:{TITLE:"mongodb overview"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 0,
+  modifiedCount: 0,
+  upsertedCount: 0
+}
+
+
+
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71237'),
+    TITLE: 'NoSQL overview',
+    DESCRIPTION: 'Intro to NoSQL',
+    BY: 'Rahul',
+    URL: 'http://example.com/nosql',
+    TAGS: [ 'database' ],
+    LIKES: 50
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+
+lib> db.books.updateOne(
+...   { TITLE: "mongodb" },
+...   { $set: { TITLE: "mongodb overview" } }
+... )
+...
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+lib> db.books.deleteOne(
+... {TITLE: "NoSQL overview"})
+{ acknowledged: true, deletedCount: 1 }
+
+
+lib> db.books.find()
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb overview',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+lib> db.books.find(
+... {BY: "Ajay"})
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb overview',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+lib> db.books.find( { BY: "Ajay" }).limit(2)
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb overview',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  }
+]
+lib> db.books.find( { BY: "Ajay" }).skip(1).limit(2)
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  }
+]
+lib> db.books.find( { BY: "Ajay" }).skip(1).limit(1)
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  }
+]
+lib> db.books.find().sort({TITLE: 1})
+[
+  {
+    _id: ObjectId('681cbd96d4a7529147b7123a'),
+    TITLE: 'Data Science',
+    DESCRIPTION: 'Data analysis with Python',
+    BY: 'Sakshi',
+    URL: 'http://example.com/ds',
+    TAGS: [ 'data', 'python' ],
+    LIKES: 70
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71238'),
+    TITLE: 'JavaScript Guide',
+    DESCRIPTION: 'JS concepts',
+    BY: 'Ajay',
+    URL: 'http://example.com/js',
+    TAGS: [ 'programming', 'javascript' ],
+    LIKES: 30
+  },
+  {
+    _id: ObjectId('681cbdc9d4a7529147b7123b'),
+    TITLE: 'Node.js Basics',
+    DESCRIPTION: 'Intro to Node.js',
+    BY: 'Ajay',
+    URL: 'http://example.com/node',
+    TAGS: [ 'javascript', 'backend' ],
+    LIKES: 45,
+    username: 'sakuu',
+    comments: 'Very helpful!'
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71239'),
+    TITLE: 'Python Crash Course',
+    DESCRIPTION: 'Learn Python quickly',
+    BY: 'Neha',
+    URL: 'http://example.com/python',
+    TAGS: [ 'python', 'programming' ],
+    LIKES: 5
+  },
+  {
+    _id: ObjectId('681cbd96d4a7529147b71236'),
+    TITLE: 'mongodb overview',
+    DESCRIPTION: 'MongoDB basics',
+    BY: 'Ajay',
+    URL: 'http://example.com/mongodb',
+    TAGS: [ 'database', 'NoSQL' ],
+    LIKES: 120
+  }
+]
+lib> db.books.save({
+... TITLE:"AI Basics",
+... DESCRIPTION: "Intro to AI",
+... BY: "Malhari",
+... URL: "http://example.com/ai",
+... TAGS:["ai","ml"],
+... LIKES: 80
+... })
+TypeError: db.books.save is not a function
+lib>//the save function doesnot work !!

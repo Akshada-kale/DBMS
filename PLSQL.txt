@@ -1,0 +1,37 @@
+create table B(Rollin int, Name varchar(30), Date_of_issue date, name_of_book varchar(30), status varchar(30));
+create table Fi(Rollin int, Date_of_return date, Amount int);
+
+insert into B values(1, 'sakshi', to_date('27-06-2024','dd-mm-yyyy'), 'evs', 'issued');
+insert into B values(2, 'neha', to_date('10-05-2025','dd-mm-yyyy'), 'maths', 'issued');
+insert into B values(3, 'diya', to_date('20-04-2025', 'dd-mm-yyyy'), 'english', 'issues');
+select * from B;
+
+DECLARE
+   roll int;
+   fine int;
+   d_of_issue date;
+   n_of_days int;
+
+BEGIN
+
+   roll:= :Rollin;
+   select Rollin, Date_of_issue into roll, d_of_issue from B where Rollin=roll;
+   n_of_days:= SYSDATE - d_of_issue;
+  
+   IF(n_of_days > 15 AND n_of_days < 30) THEN
+     fine:= n_of_days*5;
+   ELSIF(n_of_days >30) THEN 
+     fine:= n_of_days*50;
+   ELSE
+     fine:=0;
+   END IF;
+
+    INSERT INTO Fi (Rollin, Date_of_return, Amount) VALUES (roll, SYSDATE, fine);
+    UPDATE B
+    SET status='Returned'
+    where Rollin=roll; 
+END;
+/
+   
+
+

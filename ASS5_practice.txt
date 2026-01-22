@@ -1,0 +1,631 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| a1                 |
+| a3                 |
+| a4                 |
+| ass1               |
+| ass3               |
+| b30                |
+| crudd              |
+| data               |
+| ifine_system       |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| university         |
+| university_db      |
++--------------------+
+15 rows in set (0.00 sec)
+
+mysql> create database doctor;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use doctor;
+Database changed
+mysql> create table physician
+    -> (reg_no int, name varchar(30), tel_no int, city varchar(30), primary key(reg_no);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> create table physician
+    -> (reg_no int, name varchar(30), tel_no int, city varchar(30), primary key(reg_no));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql>
+mysql> desc physician;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| reg_no | int         | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| tel_no | int         | YES  |     | NULL    |       |
+| city   | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table patient
+    -> (p_name varchar(30), street varchar(30), city varchar(30), primary key(p_name));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc patient;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| p_name | varchar(30) | NO   | PRI | NULL    |       |
+| street | varchar(30) | YES  |     | NULL    |       |
+| city   | varchar(30) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table visit
+    -> (p_name varchar(30), reg_no int, date_of_visit date, fees int, foreign key(p_name) references patient(p_name), foreign key(reg_no) references physician(reg_no));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc visit;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| p_name        | varchar(30) | YES  | MUL | NULL    |       |
+| reg_no        | int         | YES  | MUL | NULL    |       |
+| date_of_visit | date        | YES  |     | NULL    |       |
+| fees          | int         | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Physician
+    -> va^C
+mysql> insert into physician
+    -> values
+    -> (1, 'sakshi', 123, 'thane'),
+    -> (2, 'akshada',456, 'kalyan'),
+    -> (3, 'neha', 678, 'mumbai'),
+    -> (4, 'diya', 945, 'nashik'),
+    -> (5, 'tisha', 100, 'ulhasnagar');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from physician;
++--------+---------+--------+------------+
+| reg_no | name    | tel_no | city       |
++--------+---------+--------+------------+
+|      1 | sakshi  |    123 | thane      |
+|      2 | akshada |    456 | kalyan     |
+|      3 | neha    |    678 | mumbai     |
+|      4 | diya    |    945 | nashik     |
+|      5 | tisha   |    100 | ulhasnagar |
++--------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into patient
+    -> values
+    -> ('
+    '> ^C
+mysql> insert into patient
+    -> values
+    -> ('swati','thane_road', 'thane'),
+    -> ('habiba', 'mumbra', 'thane'),
+    -> ('komal', 'clg_road', 'nashik'),
+    -> ('atharva', 'mohane_road', 'kalyan');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into visit
+    -> values
+    -> ('swati', 1, '2017-07-13', 1000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into visit
+    -> values
+    -> ('aditi', 'komal', '2017-09-27', 1500),
+    -> (^C
+mysql>
+mysql>
+mysql>
+mysql> insert into visit
+    -> values
+    -> ('komal',2, '2017-09-27', 1500),
+    -> ('habiba',3,'2020-10-10', 1000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into visit
+    -> values
+    -> ('atharva',4, '2022-01-01', 1800);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from visit;
++---------+--------+---------------+------+
+| p_name  | reg_no | date_of_visit | fees |
++---------+--------+---------------+------+
+| swati   |      1 | 2017-07-13    | 1000 |
+| komal   |      2 | 2017-09-27    | 1500 |
+| habiba  |      3 | 2020-10-10    | 1000 |
+| atharva |      4 | 2022-01-01    | 1800 |
++---------+--------+---------------+------+
+4 rows in set (0.00 sec)
+
+mysql> insert into patient
+    -> values
+    -> ('Dipak', 'mumbai_road','mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete p_name
+    -> from patients
+    -> where p_name = 'Dipak';
+ERROR 1109 (42S02): Unknown table 'p_name' in MULTI DELETE
+mysql>
+mysql> ('Dipak', 'mumbai_road','mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Dipak', 'mumbai_road','mumbai')' at line 1
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> delete from patients
+    -> where p_name = 'dipak';
+ERROR 1146 (42S02): Table 'doctor.patients' doesn't exist
+mysql>
+mysql>
+mysql> delete from patient
+    -> where p_name = 'dipak';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from physians;
+ERROR 1146 (42S02): Table 'doctor.physians' doesn't exist
+mysql> select * from physician;
++--------+---------+--------+------------+
+| reg_no | name    | tel_no | city       |
++--------+---------+--------+------------+
+|      1 | sakshi  |    123 | thane      |
+|      2 | akshada |    456 | kalyan     |
+|      3 | neha    |    678 | mumbai     |
+|      4 | diya    |    945 | nashik     |
+|      5 | tisha   |    100 | ulhasnagar |
++--------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select patient;
+ERROR 1054 (42S22): Unknown column 'patient' in 'field list'
+mysql> select * from patients;
+ERROR 1146 (42S02): Table 'doctor.patients' doesn't exist
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select p_name, street,city
+    -> from patient
+    -> where city = 'nashik';
++--------+----------+--------+
+| p_name | street   | city   |
++--------+----------+--------+
+| komal  | clg_road | nashik |
++--------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into physician
+    -> values
+    -> (6,'mohan',555, 'mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from physician;
++--------+---------+--------+------------+
+| reg_no | name    | tel_no | city       |
++--------+---------+--------+------------+
+|      1 | sakshi  |    123 | thane      |
+|      2 | akshada |    456 | kalyan     |
+|      3 | neha    |    678 | mumbai     |
+|      4 | diya    |    945 | nashik     |
+|      5 | tisha   |    100 | ulhasnagar |
+|      6 | mohan   |    555 | mumbai     |
++--------+---------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select COUNT(city)
+    -> from physician
+    -> where city = 'mumbai';
++-------------+
+| COUNT(city) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select p_name
+    -> from ^C
+mysql> select ASC(p_name)
+    -> from patient
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC(p_name)
+from patient' at line 1
+mysql>
+mysql> select p_name
+    -> from patient
+    -> ORDER BY p_name ASC;
++---------+
+| p_name  |
++---------+
+| atharva |
+| habiba  |
+| komal   |
+| swati   |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from patients;
+ERROR 1146 (42S02): Table 'doctor.patients' doesn't exist
+mysql> selevt * from patient;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selevt * from patient' at line 1
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select p_name
+    -> from patient
+    -> ORDER BY DESC(p_name);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DESC(p_name)' at line 3
+mysql> select p_name
+    -> from patient
+    -> ORDER BY p_name DESC;
++---------+
+| p_name  |
++---------+
+| swati   |
+| komal   |
+| habiba  |
+| atharva |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from visit;
++---------+--------+---------------+------+
+| p_name  | reg_no | date_of_visit | fees |
++---------+--------+---------------+------+
+| swati   |      1 | 2017-07-13    | 1000 |
+| komal   |      2 | 2017-09-27    | 1500 |
+| habiba  |      3 | 2020-10-10    | 1000 |
+| atharva |      4 | 2022-01-01    | 1800 |
++---------+--------+---------------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from physician;
++--------+---------+--------+------------+
+| reg_no | name    | tel_no | city       |
++--------+---------+--------+------------+
+|      1 | sakshi  |    123 | thane      |
+|      2 | akshada |    456 | kalyan     |
+|      3 | neha    |    678 | mumbai     |
+|      4 | diya    |    945 | nashik     |
+|      5 | tisha   |    100 | ulhasnagar |
+|      6 | mohan   |    555 | mumbai     |
++--------+---------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select p_name
+    -> from visit
+    -> where fees > 5000;
+Empty set (0.00 sec)
+
+mysql> update visit
+    -> set fees = 5500
+    -> where p_name = 'komal';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from visit;
++---------+--------+---------------+------+
+| p_name  | reg_no | date_of_visit | fees |
++---------+--------+---------------+------+
+| swati   |      1 | 2017-07-13    | 1000 |
+| komal   |      2 | 2017-09-27    | 5500 |
+| habiba  |      3 | 2020-10-10    | 1000 |
+| atharva |      4 | 2022-01-01    | 1800 |
++---------+--------+---------------+------+
+4 rows in set (0.00 sec)
+
+mysql> select p_name
+    -> from visit
+    -> where fees > 5000;
++--------+
+| p_name |
++--------+
+| komal  |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select p_name, city
+    -> from patient, visit
+    -> where ^C
+mysql> select visit.p_name, city
+    -> from patient, visit
+    -> where visit.p_name = patient.p_name
+    -> and date_of_visit = '2017-07-13';
++--------+-------+
+| p_name | city  |
++--------+-------+
+| swati  | thane |
++--------+-------+
+1 row in set (0.00 sec)
+
+mysql> insert into visit
+    -> values
+    -> ('mauli', 1,'2018-01-01', 5100);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`doctor`.`visit`, CONSTRAINT `visit_ibfk_1` FOREIGN KEY (`p_name`) REFERENCES `patient` (`p_name`))
+mysql> insert into patient
+    -> values
+    -> ('mauli', 1,'2018-01-01', 5100);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into patient
+    -> values
+    -> (''mauli, 'shahad','kalyan');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mauli, 'shahad','kalyan')' at line 3
+mysql>
+mysql>
+mysql>
+mysql> insert into patient
+    -> values
+    -> ('mauli, 'shahad','kalyan');
+    '> ^C
+mysql> ^C
+mysql> ^C
+mysql> insert into patient
+    -> values
+    -> ('mauli', 'shahad','kalyan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| mauli   | shahad      | kalyan |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from visits;
+ERROR 1146 (42S02): Table 'doctor.visits' doesn't exist
+mysql> select * from visit;
++---------+--------+---------------+------+
+| p_name  | reg_no | date_of_visit | fees |
++---------+--------+---------------+------+
+| swati   |      1 | 2017-07-13    | 1000 |
+| komal   |      2 | 2017-09-27    | 5500 |
+| habiba  |      3 | 2020-10-10    | 1000 |
+| atharva |      4 | 2022-01-01    | 1800 |
++---------+--------+---------------+------+
+4 rows in set (0.00 sec)
+
+mysql> insert into visit
+    -> values
+    -> ('mauli', 1, '2018-02-21', 5100);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from visit;
++---------+--------+---------------+------+
+| p_name  | reg_no | date_of_visit | fees |
++---------+--------+---------------+------+
+| swati   |      1 | 2017-07-13    | 1000 |
+| komal   |      2 | 2017-09-27    | 5500 |
+| habiba  |      3 | 2020-10-10    | 1000 |
+| atharva |      4 | 2022-01-01    | 1800 |
+| mauli   |      1 | 2018-02-21    | 5100 |
++---------+--------+---------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from physician;
++--------+---------+--------+------------+
+| reg_no | name    | tel_no | city       |
++--------+---------+--------+------------+
+|      1 | sakshi  |    123 | thane      |
+|      2 | akshada |    456 | kalyan     |
+|      3 | neha    |    678 | mumbai     |
+|      4 | diya    |    945 | nashik     |
+|      5 | tisha   |    100 | ulhasnagar |
+|      6 | mohan   |    555 | mumbai     |
++--------+---------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from patient;
++---------+-------------+--------+
+| p_name  | street      | city   |
++---------+-------------+--------+
+| atharva | mohane_road | kalyan |
+| habiba  | mumbra      | thane  |
+| komal   | clg_road    | nashik |
+| mauli   | shahad      | kalyan |
+| swati   | thane_road  | thane  |
++---------+-------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select name
+    -> from physician, visit
+    -> where ^C
+mysql>
+mysql> select COUNT(name)
+    -> from physician , visit
+    -> where visit.reg_n0 = physician.reg_no;
+ERROR 1054 (42S22): Unknown column 'visit.reg_n0' in 'where clause'
+mysql>
+mysql>
+mysql>
+mysql> select COUNT(name)
+    -> from physician , visit
+    -> where visit.reg_no = physician.reg_no;
++-------------+
+| COUNT(name) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select COUNT(physician.name)
+    -> from physician , visit
+    -> where visit.reg_no = physician.reg_no
+    -> and GROUP BY name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'GROUP BY name' at line 4
+mysql>
+mysql>
+mysql>
+mysql> select COUNT(physician.name)
+    -> from physician , visit
+    -> where visit.reg_no = physician.reg_no
+    -> GROUP BY name;
++-----------------------+
+| COUNT(physician.name) |
++-----------------------+
+|                     2 |
+|                     1 |
+|                     1 |
+|                     1 |
++-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select physician.name, COUNT(physician.name)
+    -> from physician , visit
+    -> where visit.reg_no = physician.reg_no
+    -> GROUP BY name;
++---------+-----------------------+
+| name    | COUNT(physician.name) |
++---------+-----------------------+
+| sakshi  |                     2 |
+| akshada |                     1 |
+| neha    |                     1 |
+| diya    |                     1 |
++---------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> select date_of_visit
+    -> from visit
+    -> GROUP BY fees ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC' at line 3
+mysql>
+mysql>
+mysql> select date_of_visit
+    -> from visit
+    -> ORDER BY fees ASC;
++---------------+
+| date_of_visit |
++---------------+
+| 2017-07-13    |
+| 2020-10-10    |
+| 2022-01-01    |
+| 2018-02-21    |
+| 2017-09-27    |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> select date_of_visit, fees
+    -> from visit
+    -> ORDER BY fees ASC;
++---------------+------+
+| date_of_visit | fees |
++---------------+------+
+| 2017-07-13    | 1000 |
+| 2020-10-10    | 1000 |
+| 2022-01-01    | 1800 |
+| 2018-02-21    | 5100 |
+| 2017-09-27    | 5500 |
++---------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select date_of_visit, fees
+    -> from visit
+    -> ORDER BY date_of_visit ASC;
++---------------+------+
+| date_of_visit | fees |
++---------------+------+
+| 2017-07-13    | 1000 |
+| 2017-09-27    | 5500 |
+| 2018-02-21    | 5100 |
+| 2020-10-10    | 1000 |
+| 2022-01-01    | 1800 |
++---------------+------+
+5 rows in set (0.00 sec)
+
+mysql> select name
+    -> from physician
+    -> where patient.reg_no = visit.reg_no
+    -> and p_name = 'swati';
+ERROR 1054 (42S22): Unknown column 'patient.reg_no' in 'where clause'
+mysql>
+mysql>
+mysql> select name
+    -> from physician
+    -> where patient^Ceg_no = visit.reg_no
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> select name
+    -> from physician, visit
+    -> where physician.reg_no = visit.reg_no
+    -> and p_name = 'swati';
++--------+
+| name   |
++--------+
+| sakshi |
++--------+
+1 row in set (0.00 sec)
+
+mysql>
